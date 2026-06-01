@@ -1,0 +1,75 @@
+# Python 컴파일 및 캐시 파일
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 가상환경 (Virtual Environments)
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter Notebook 관련 파일
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+# Jupyter 노트북 캐시 및 자동 저장 파일
+.local
+
+# 데이터 분석 데이터 파일 (대용량 파일 오로드 방지)
+# 프로젝트 구조에 따라 데이터 폴더를 지정하여 제외하는 것이 좋습니다.
+data/
+raw/
+processed/
+external/
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.tsv
+*.jsonl
+*.zip
+*.tar.gz
+*.gz
+*.pkl
+*.pickle
+*.h5
+*.npy
+*.npz
+
+# 모델 가중치 및 대용량 체크포인트 파일
+models/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.pb
+*.onnx
+
+# 로그 및 런타임 파일
+*.log
+catboost_info/
+lightning_logs/
+runs/
+
+# 환경 변수 및 보안 설정 파일
+.env
+.env.shared
+.env.local
+
+# OS 및 시스템 임시 파일
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE (VS Code, PyCharm 등) 설정 파일
+.vscode/
+.idea/
+.ipynb
