@@ -75,3 +75,6 @@ Thumbs.db
 .vscode/
 .idea/
 .ipynb
+
+# AI 에이전트 관련 폴더
+.agents/

@@ -11,7 +11,12 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import pandas as pd
 from typing import Dict, Any, List
+import os
+from dotenv import load_dotenv
 import naver_api
+
+# .env 파일 로드
+load_dotenv()
 
 # Plotly 공통 디자인 템플릿 설정
 def set_plotly_theme():
@@ -39,36 +44,24 @@ def set_plotly_theme():
     pio.templates.default = "custom_theme"
 
 def render_sidebar() -> bool:
-    """공통 사이드바를 렌더링하고 API 키 입력 여부를 반환합니다."""
+    """공통 사이드바를 렌더링하고 API 키 입력 여부를 반환합니다. 
+    .env 파일의 값을 로드하여 자동으로 설정하며, 수동 입력을 제거합니다.
+    """
     st.sidebar.markdown("### 🔑 NAVER API 설정")
     
-    # Session State 초기화
-    if "client_id" not in st.session_state:
-        st.session_state["client_id"] = ""
-    if "client_secret" not in st.session_state:
-        st.session_state["client_secret"] = ""
-        
-    client_id = st.sidebar.text_input(
-        "Client ID",
-        value=st.session_state["client_id"],
-        type="password",
-        help="네이버 개발자 센터에서 발급받은 Client ID를 입력하세요."
-    )
-    client_secret = st.sidebar.text_input(
-        "Client Secret",
-        value=st.session_state["client_secret"],
-        type="password",
-        help="네이버 개발자 센터에서 발급받은 Client Secret을 입력하세요."
-    )
+    # Session State 초기화 및 .env 값 강제 반영
+    client_id = os.getenv("NAVER_CLIENT_ID", "").strip()
+    client_secret = os.getenv("NAVER_CLIENT_SECRET", "").strip()
     
     st.session_state["client_id"] = client_id
     st.session_state["client_secret"] = client_secret
     
     if not client_id or not client_secret:
-        st.sidebar.warning("API 인증 키를 입력해 주세요.")
+        st.sidebar.warning("⚠️ .env 파일에 NAVER_CLIENT_ID와 NAVER_CLIENT_SECRET을 설정해 주세요.")
+        st.sidebar.info("프로젝트 루트의 `.env` 파일에 발급받은 API 키를 입력하시면 대시보드가 활성화됩니다.")
         return False
     
-    st.sidebar.success("API 인증 키가 준비되었습니다.")
+    st.sidebar.success("✅ .env 파일로부터 API 인증 키를 성공적으로 로드했습니다.")
     return True
 
 def parse_keywords(keyword_str: str) -> List[str]:
