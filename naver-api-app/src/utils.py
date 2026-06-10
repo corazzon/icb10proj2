@@ -45,23 +45,40 @@ def set_plotly_theme():
 
 def render_sidebar() -> bool:
     """공통 사이드바를 렌더링하고 API 키 입력 여부를 반환합니다. 
-    .env 파일의 값을 로드하여 자동으로 설정하며, 수동 입력을 제거합니다.
+    로컬 환경의 .env 파일 또는 Streamlit Cloud의 Secrets 설정에서 값을 자동으로 로드합니다.
     """
     st.sidebar.markdown("### 🔑 NAVER API 설정")
     
-    # Session State 초기화 및 .env 값 강제 반영
-    client_id = os.getenv("NAVER_CLIENT_ID", "").strip()
-    client_secret = os.getenv("NAVER_CLIENT_SECRET", "").strip()
+    # 1. Streamlit Secrets에서 먼저 로드 시도
+    client_id = st.secrets.get("NAVER_CLIENT_ID", None)
+    client_secret = st.secrets.get("NAVER_CLIENT_SECRET", None)
+    
+    # 2. Secrets에 없으면 로컬 환경 변수(.env)에서 로드 시도
+    if not client_id:
+        client_id = os.getenv("NAVER_CLIENT_ID", "")
+    if not client_secret:
+        client_secret = os.getenv("NAVER_CLIENT_SECRET", "")
+        
+    client_id = client_id.strip()
+    client_secret = client_secret.strip()
     
     st.session_state["client_id"] = client_id
     st.session_state["client_secret"] = client_secret
     
     if not client_id or not client_secret:
-        st.sidebar.warning("⚠️ .env 파일에 NAVER_CLIENT_ID와 NAVER_CLIENT_SECRET을 설정해 주세요.")
-        st.sidebar.info("프로젝트 루트의 `.env` 파일에 발급받은 API 키를 입력하시면 대시보드가 활성화됩니다.")
+        st.sidebar.warning("⚠️ 네이버 API 인증 키 설정이 필요합니다.")
+        st.sidebar.info(
+            "**설정 방법**:\n"
+            "1. **로컬 실행 시**: 루트 폴더의 `.env` 파일에 `NAVER_CLIENT_ID`와 `NAVER_CLIENT_SECRET`을 설정하세요.\n"
+            "2. **배포 환경(Streamlit Cloud) 실행 시**: App Settings -> Secrets에 아래와 같이 추가하세요.\n"
+            "```toml\n"
+            "NAVER_CLIENT_ID = \"발급받은_아이디\"\n"
+            "NAVER_CLIENT_SECRET = \"발급받은_시크릿\"\n"
+            "```"
+        )
         return False
     
-    st.sidebar.success("✅ .env 파일로부터 API 인증 키를 성공적으로 로드했습니다.")
+    st.sidebar.success("✅ API 인증 키를 성공적으로 로드했습니다.")
     return True
 
 def parse_keywords(keyword_str: str) -> List[str]:
