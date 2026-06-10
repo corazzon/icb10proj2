@@ -49,9 +49,15 @@ def render_sidebar() -> bool:
     """
     st.sidebar.markdown("### 🔑 NAVER API 설정")
     
-    # 1. Streamlit Secrets에서 먼저 로드 시도
-    client_id = st.secrets.get("NAVER_CLIENT_ID", None)
-    client_secret = st.secrets.get("NAVER_CLIENT_SECRET", None)
+    # 1. Streamlit Secrets에서 먼저 로드 시도 (파일이 없으면 예외 발생하므로 try-except 처리)
+    client_id = None
+    client_secret = None
+    try:
+        client_id = st.secrets.get("NAVER_CLIENT_ID", None)
+        client_secret = st.secrets.get("NAVER_CLIENT_SECRET", None)
+    except Exception:
+        # secrets.toml 파일이 존재하지 않는 경우 예외를 건너뜁니다.
+        pass
     
     # 2. Secrets에 없으면 로컬 환경 변수(.env)에서 로드 시도
     if not client_id:
