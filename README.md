@@ -1,3 +1,14 @@
+# 프로젝트 개요
+
+🔗 **Streamlit 앱 접속 주소**: [https://icb10proj2-nxegxy3el5ddjrnkmchhxr.streamlit.app/](https://icb10proj2-nxegxy3el5ddjrnkmchhxr.streamlit.app/)
+
+## 현재 작업 내역 (업데이트됨)
+- **Streamlit 애플리케이션 세팅**: `naver-api-app` 하위에 소스코드 및 필요 구조(`src/app.py` 등) 구성 완료
+- **자동화 설정 (Git Hooks)**: 파일 변경사항 발생 시 자동 커밋을 돕는 `auto-commit.sh` 스크립트 작성 및 커밋 완료 시 원격 저장소로 자동 푸시하는 `post-commit` 훅 설정 완료
+- **Streamlit 배포**: 클라우드 환경에 앱 배포 완료 및 접속 주소 연동
+
+---
+
 ## STEP 0. 팀 구성 및 협업 환경 세팅
 
 ### 슬랙 세팅
