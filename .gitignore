@@ -78,3 +78,6 @@ Thumbs.db
 
 # AI 에이전트 관련 폴더
 .agents/
+
+# 자동 커밋 스크립트
+auto-commit.sh
