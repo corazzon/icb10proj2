@@ -68,6 +68,7 @@ pg = st.navigation({
         st.Page("pages/shopping_trend.py", title="쇼핑 트렌드 분석", icon="🛍️")
     ],
     "검색 데이터 다차원 분석": [
+        st.Page("pages/social_integration.py", title="소셜 버즈 통합 분석", icon="🔗"),
         st.Page("pages/shopping.py", title="쇼핑 검색 분석", icon="🛒"),
         st.Page("pages/blog.py", title="블로그 검색 분석", icon="📝"),
         st.Page("pages/cafe.py", title="카페글 검색 분석", icon="👥"),
